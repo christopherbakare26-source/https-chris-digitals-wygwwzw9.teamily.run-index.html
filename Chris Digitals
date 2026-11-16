@@ -1,1 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script data-tmly-media-guard="1">(function(){"use strict";
+var T=window.__tmly||(window.__tmly=(function(){
+var o={},n=String(window.name||"");
+if(n.slice(0,5)==="tmly:"){n.slice(5).split("&").forEach(function(kv){
+var i=kv.indexOf("=");if(i>0){o[kv.slice(0,i)]=kv.slice(i+1)}})}
+return o})());
+if(T.presentation!=="preview"){return}
+var K="tmly:media-muted:"+String(location.pathname).replace(/[^/]*$/,"");
+var muted=false;try{muted=localStorage.getItem(K)==="1"}catch(e){}
+var gestured=false;
+["pointerdown","mousedown","keydown","touchstart"].forEach(function(t){
+document.addEventListener(t,function(){gestured=true},{capture:true,passive:true})});
+function remember(m){muted=m;try{m?localStorage.setItem(K,"1"):localStorage.removeItem(K)}catch(e){}}
+function announcePaused(el){try{el.dispatchEvent(new Event("pause"))}catch(e){}}
+function harden(el){
+el.autoplay=false;el.removeAttribute("autoplay");
+if(el.getAttribute("preload")==="auto"){el.setAttribute("preload","none")}
+if(muted){el.muted=true}
+if(!gestured&&!el.paused){try{el.pause()}catch(e){}}}
+var play=HTMLMediaElement.prototype.play;
+HTMLMediaElement.prototype.play=function(){
+if(!gestured){announcePaused(this);
+return Promise.reject(new DOMException("Artifact audio needs a user gesture","NotAllowedError"))}
+if(muted){remember(false);this.muted=false}
+return play.apply(this,arguments)};
+var acProtos=[];
+function guardAC(n){
+var N=window[n];if(!N||!N.prototype){return}
+if(acProtos.indexOf(N.prototype)<0){acProtos.push(N.prototype);
+var res=N.prototype.resume;
+if(typeof res==="function"){N.prototype.resume=function(){
+if(!gestured){return Promise.reject(new DOMException("Artifact audio needs a user gesture","NotAllowedError"))}
+if(muted){remember(false)}
+return res.apply(this,arguments)}}}
+var W=function(o){var c=arguments.length?new N(o):new N();
+if(!gestured){try{c.suspend()}catch(e){}}return c};
+W.prototype=N.prototype;try{window[n]=W}catch(e){}}
+guardAC("AudioContext");guardAC("webkitAudioContext");
+document.addEventListener("play",function(e){
+var el=e.target;if(el instanceof HTMLMediaElement&&!gestured){try{el.pause()}catch(err){}}},true);
+document.addEventListener("pause",function(e){
+if(e.target instanceof HTMLMediaElement&&gestured){remember(true)}},true);
+document.addEventListener("volumechange",function(e){
+var el=e.target;if(el instanceof HTMLMediaElement&&gestured){remember(el.muted||el.volume===0)}},true);
+function sweep(n){if(n&&n.querySelectorAll){var l=n.querySelectorAll("audio,video");
+for(var i=0;i<l.length;i++){harden(l[i])}}}
+new MutationObserver(function(rs){for(var i=0;i<rs.length;i++){var a=rs[i].addedNodes;
+for(var j=0;j<a.length;j++){var n=a[j];
+if(n instanceof HTMLMediaElement){harden(n)}else{sweep(n)}}}})
+.observe(document.documentElement,{childList:true,subtree:true});
+document.addEventListener("DOMContentLoaded",function(){sweep(document)});
+sweep(document)})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Christopher Bakare — WordPress Developer &amp; Website Designer | Chris Digitals</title>
+<meta name="description" content="Christopher Bakare is a WordPress developer and website designer in Akure, Nigeria. I build, redesign and improve WordPress websites with Divi, Elementor, Kadence and WooCommerce — professional design, responsive layouts, practical functionality.">
+<meta name="author" content="Christopher Bakare">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://chrisdigitals.com/">
 
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Chris Digitals">
+<meta property="og:title" content="Christopher Bakare — WordPress Developer &amp; Website Designer">
+<meta property="og:description" content="WordPress websites built to help your business grow. Design, redesign and improvement work with Divi, Elementor, Kadence and WooCommerce.">
+<meta property="og:url" content="https://chrisdigitals.com/">
+<meta property="og:image" content="https://chrisdigitals.com/images/og-image.jpg">
+<meta property="og:locale" content="en_NG">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Christopher Bakare — WordPress Developer &amp; Website Designer">
+<meta name="twitter:description" content="WordPress websites built to help your business grow.">
+<meta name="twitter:image" content="https://chrisdigitals.com/images/og-image.jpg">
+
+<meta name="theme-color" content="#05060b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237c5cff'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' fill='white' text-anchor='middle'%3EC%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Chris Digitals",
+  "description": "WordPress website design, development, redesign and maintenance by Christopher Bakare.",
+  "url": "https://chrisdigitals.com/",
+  "email": "christopherbakare014@gmail.com",
+  "founder": {
+    "@type": "Person",
+    "name": "Christopher Bakare",
+    "jobTitle": "WordPress Developer & Website Designer",
+    "sameAs": "https://linkedin.com/in/christopher-bakare-b3a78736a"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Akure",
+    "addressRegion": "Ondo State",
+    "addressCountry": "NG"
+  },
+  "areaServed": "Worldwide",
+  "knowsAbout": [
+    "WordPress Website Design and Development",
+    "Divi Builder",
+    "Elementor",
+    "Kadence",
+    "WPBakery Page Builder",
+    "Gutenberg Block Editor",
+    "WooCommerce",
+    "Advanced Custom Fields",
+    "Landing Page Design",
+    "Website Redesign and Customization",
+    "Website Maintenance and Bug Fixes",
+    "Responsive Website Design",
+    "Website Performance Improvements",
+    "Website Forms and Conversion Optimization"
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html">
+      <img class="brand__logo" src="assets/images/logo-header.png" alt="Chris Digitals — WordPress Developer and Website Designer" width="113" height="50" decoding="async">
+    </a>
+
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__link" href="index.html" aria-current="page">Home</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="services.html">Services</a>
+      <a class="nav__link" href="work.html">Work</a>
+      <a class="nav__link" href="contact.html">Contact</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn--primary btn--sm" href="contact.html">Book a Free Call</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
+  <a href="index.html" aria-current="page">Home</a>
+  <a href="about.html">About</a>
+  <a href="services.html">Services</a>
+  <a href="work.html">Work</a>
+  <a href="contact.html">Contact</a>
+  <a class="btn btn--primary btn--block" href="contact.html">Book a Free Discovery Call</a>
+</nav>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero__grid">
+        <div class="hero__content">
+          <span class="hero__badge">
+            <span class="dot" aria-hidden="true"></span>
+            Available for new projects
+          </span>
+
+          <h1 class="hero__title">
+            WordPress Websites<br>
+            Built to Help Your<br>
+            Business <em>Grow.</em>
+          </h1>
+
+          <p class="hero__lead">
+            I help businesses build, redesign, and improve WordPress websites with
+            professional design, responsive layouts, and practical functionality.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--primary" href="contact.html">
+              Book a Free Discovery Call
+              <svg class="arrow" width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="btn btn--ghost" href="work.html">View My Work</a>
+          </div>
+
+          <ul class="hero__meta">
+            <li>
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5l2 4.1 4.5.6-3.3 3.2.8 4.5L8 11.8l-4 2.1.8-4.5L1.5 6.2 6 5.6 8 1.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+              4 years of WordPress experience
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 14.5s5-4.2 5-8a5 5 0 10-10 0c0 3.8 5 8 5 8z" stroke="currentColor" stroke-width="1.3"/><circle cx="8" cy="6.5" r="1.8" stroke="currentColor" stroke-width="1.3"/></svg>
+              Akure, Nigeria — working worldwide
+            </li>
+            <li>
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 4.5h12v8H2z" stroke="currentColor" stroke-width="1.3"/><path d="M2 5l6 4 6-4" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+              Fiverr &amp; <a href="https://www.upwork.com/freelancers/~013d6e500fb8a19889?mp_source=share" target="_blank" rel="noopener noreferrer">Upwork</a> clients
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero__visual">
+          <div class="portrait">
+            <div class="portrait__grid" aria-hidden="true"></div>
+            <img class="portrait__img" src="assets/images/christopher-bakare.png" alt="Christopher Bakare, WordPress Developer and Website Designer" width="500" height="500" decoding="async">
+            <div class="portrait__tag">
+              <div>
+                <strong>Christopher Bakare</strong>
+                <span>WordPress Developer &amp; Designer</span>
+              </div>
+              <span class="chip">Chris Digitals</span>
+            </div>
+          </div>
+
+          <div class="float-card float-card--a" aria-hidden="true">
+            <div class="float-card__label">Page speed</div>
+            <div class="float-card__bars"><i></i><i></i><i></i></div>
+          </div>
+
+          <div class="float-card float-card--b" aria-hidden="true">
+            <div class="float-card__label">Project checklist</div>
+            <div class="float-card__row"><span class="tick">✓</span> Responsive layout</div>
+            <div class="float-card__row"><span class="tick">✓</span> Forms tested</div>
+            <div class="float-card__row"><span class="tick">✓</span> Handover ready</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TOOL STRIP ============ -->
+  <div class="toolstrip">
+    <div class="container toolstrip__inner">
+      <span class="toolstrip__label">Working with</span>
+      <ul class="toolstrip__list">
+        <li>WordPress</li>
+        <li>Divi 5</li>
+        <li>Elementor Pro</li>
+        <li>Kadence</li>
+        <li>WPBakery</li>
+        <li>Gutenberg</li>
+        <li>WooCommerce</li>
+        <li>ACF</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ SERVICES PREVIEW ============ -->
+  <section class="section" id="services">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">What I do</span>
+        <h2 class="section__title">Practical WordPress work, <em>done properly.</em></h2>
+        <p class="section__lead">
+          Whether you need a brand-new site, a redesign that finally converts, or a
+          stubborn bug fixed — the work is scoped clearly and delivered ready to use.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="card__title">WordPress Website Design</h3>
+          <p class="card__text">
+            A clean, professional site built around your services and the action you
+            want visitors to take — not a template dropped in and left as-is.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 20V9M10 20V4M16 20v-7M22 20H2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="card__title">Website Redesign</h3>
+          <p class="card__text">
+            Keep what works, fix what doesn't. Better layout, clearer hierarchy and a
+            more credible first impression — without losing your existing content.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.4 5.2 5.6.7-4.1 3.9 1 5.6L12 15.7 7.1 18.4l1-5.6L4 8.9l5.6-.7L12 3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="card__title">Divi &amp; Elementor Builds</h3>
+          <p class="card__text">
+            Custom Divi 5 and Elementor Pro builds that stay editable — so your team
+            can update pages without breaking the design.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 6h18l-1.5 12.5a2 2 0 01-2 1.5H6.5a2 2 0 01-2-1.5L3 6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8.5 9.5V6a3.5 3.5 0 017 0v3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <h3 class="card__title">WooCommerce Development</h3>
+          <p class="card__text">
+            Product pages, cart and checkout set up so customers can actually complete
+            a purchase on a phone as easily as on a laptop.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14.5 3.5l6 6-3 3-6-6 3-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M11.5 6.5L4 14v6h6l7.5-7.5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="card__title">Maintenance &amp; Bug Fixes</h3>
+          <p class="card__text">
+            Broken layouts, plugin conflicts, forms that stopped sending — diagnosed
+            and fixed, with a clear note on what caused it.
+          </p>
+        </article>
+
+        <article class="card reveal">
+          <div class="card__icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L4.5 13.5H11l-1 8.5 8.5-11.5H12l1-8.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="card__title">Improvements &amp; Optimization</h3>
+          <p class="card__text">
+            Faster loading, tighter spacing, better forms and clearer calls to action —
+            the small changes that lift enquiries.
+          </p>
+        </article>
+      </div>
+
+      <div style="margin-top:2.2rem" class="reveal">
+        <a class="link-arrow" href="services.html">
+          See all eight services
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURED WORK ============ -->
+  <section class="section section--alt" id="work">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Selected work</span>
+        <h2 class="section__title">Recent projects, <em>real briefs.</em></h2>
+        <p class="section__lead">
+          A look at three WordPress projects — a landing page build and two
+          improvement engagements focused on conversion and polish.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="card reveal" style="padding:0;overflow:hidden">
+          <a class="card__shot-link" href="https://alevongreen.com/services/tree-trimming/" target="_blank" rel="noopener noreferrer" aria-label="Visit the Alevongreen tree trimming services website">
+            <img class="card__shot" src="assets/images/project-alevongreen.jpg" alt="Alevongreen Landscaping Services website — tree trimming services in Florida" width="1200" height="546" loading="lazy" decoding="async">
+          </a>
+          <div style="padding:1.4rem">
+            <h3 class="card__title"><a class="card__title-link" href="https://alevongreen.com/services/tree-trimming/" target="_blank" rel="noopener noreferrer">Alevongreen</a></h3>
+            <p class="card__text">
+              A lawn installation service landing page designed to present the business
+              professionally and encourage potential customers to make enquiries.
+            </p>
+            <div class="project__tags" style="margin-top:1rem">
+              <span class="tag">WordPress</span>
+              <span class="tag">Landing Page</span>
+              <span class="tag">Elementor</span>
+            </div>
+            <div style="margin-top:1.2rem">
+              <a class="link-arrow" href="work.html#alevongreen">
+                View project
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" style="padding:0;overflow:hidden">
+          <a class="card__shot-link" href="https://rvaconstructionservices.com" target="_blank" rel="noopener noreferrer" aria-label="Visit the RVA Construction Services website">
+            <img class="card__shot" src="assets/images/project-rva.jpg" alt="RVA Construction Services website — RVA logo and estimate request page" width="1200" height="577" loading="lazy" decoding="async">
+          </a>
+          <div style="padding:1.4rem">
+            <h3 class="card__title"><a class="card__title-link" href="https://rvaconstructionservices.com" target="_blank" rel="noopener noreferrer">RVA Construction Services</a></h3>
+            <p class="card__text">
+              WordPress improvements focused on conversion, form presentation, user
+              experience, and making it easier for visitors to request estimates.
+            </p>
+            <div class="project__tags" style="margin-top:1rem">
+              <span class="tag">W
